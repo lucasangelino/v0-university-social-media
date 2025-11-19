@@ -2,14 +2,12 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: ["**"]
   pull_request:
 
 jobs:
-  lint:
+  setup:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -19,7 +17,7 @@ jobs:
           version: 7.25.1
           run_install: false
 
-      - name: Install Node
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -28,12 +26,33 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run linter
+  lint:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 7.25.1
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run lint
         run: pnpm lint
 
   typecheck:
     runs-on: ubuntu-latest
-
+    needs: setup
     steps:
       - uses: actions/checkout@v4
 
@@ -43,7 +62,7 @@ jobs:
           version: 7.25.1
           run_install: false
 
-      - name: Install Node
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -52,12 +71,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run TypeScript check
+      - name: Typecheck
         run: pnpm typecheck
 
-  tests:
+  test:
     runs-on: ubuntu-latest
-
+    needs: setup
     steps:
       - uses: actions/checkout@v4
 
@@ -67,7 +86,7 @@ jobs:
           version: 7.25.1
           run_install: false
 
-      - name: Install Node
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -81,8 +100,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, tests]
-
+    needs: [lint, typecheck, test]
     steps:
       - uses: actions/checkout@v4
 
@@ -92,7 +110,7 @@ jobs:
           version: 7.25.1
           run_install: false
 
-      - name: Install Node
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -101,5 +119,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build project
+      - name: Build
         run: pnpm build
