@@ -19,20 +19,16 @@ const AuthContext = createContext<AuthContextType>({
 })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(() => {
+    const storedUser = localStorage.getItem('user')
+    return storedUser ? JSON.parse(storedUser) : null
+  })
   const [loading, setLoading] = useState(true)
   const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
-    // Check for user session
-    const storedUser = localStorage.getItem('user')
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser)
-      if (!user || JSON.stringify(user) !== JSON.stringify(parsedUser)) {
-        setUser(parsedUser)
-      }
-    } else if (pathname !== '/login' && pathname !== '/register') {
+    if (!user && pathname !== '/login' && pathname !== '/register') {
       router.push('/login')
     }
     setLoading(false)
