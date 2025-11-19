@@ -1,4 +1,4 @@
-name: CD - Deploy to Vercel
+name: Continuous Delivery
 
 on:
   push:
@@ -16,12 +16,12 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 7.25.1
 
       - name: Use Node LTS
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
           cache: "pnpm"
 
       - name: Install dependencies
@@ -39,3 +39,25 @@ jobs:
       - name: Trigger Vercel Deploy
         run: |
           curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"
+
+  dast-owasp-zap:
+    needs: deploy
+    runs-on: ubuntu-latest
+    name: OWASP ZAP Baseline DAST Scan
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.11.0
+        with:
+          target: "https://v0-university-social-media-three.vercel.app/"
+          rules_file_name: ".zap-rules.tsv"
+          cmd_options: "-a"
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: report_html.html
