@@ -28,6 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (typeof window !== 'undefined') {
       const storedUser = localStorage.getItem('user')
       if (storedUser) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setUser(JSON.parse(storedUser))
       } else if (pathname !== '/login' && pathname !== '/register') {
         router.push('/login')
