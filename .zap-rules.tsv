@@ -1,0 +1,5 @@
+# RuleID Threshold Action
+10010	WARN	# Cookie No HttpOnly Flag
+10020	IGNORE	# X-Frame-Options Header not set
+10021	FAIL	# X-Content-Type-Options Header missing
+90001	FAIL	# Remote Code Execution (Example Custom Rule)
