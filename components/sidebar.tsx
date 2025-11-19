@@ -11,7 +11,7 @@ export function Sidebar() {
   return (
     <div className="w-full p-4 flex flex-col gap-2">
       <div className="mb-4">
-        <h1 className="text-2xl font-bold text-primary">Security Media</h1>
+        <h1 className="text-2xl font-bold text-primary">SEGURIDADS</h1>
       </div>
 
       <nav className="flex flex-col gap-2">
