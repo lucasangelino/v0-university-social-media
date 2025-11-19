@@ -81,8 +81,8 @@ export function Feed() {
       timestamp: new Date(),
     }
 
-    setPosts(posts.map(post => 
-      post.id === postId 
+    setPosts(posts.map(post =>
+      post.id === postId
         ? { ...post, comments: [...post.comments, newComment] }
         : post
     ))
@@ -103,9 +103,9 @@ export function Feed() {
           </div>
         ) : (
           posts.map((post) => (
-            <PostCard 
-              key={post.id} 
-              post={post} 
+            <PostCard
+              key={post.id}
+              post={post}
               onAddComment={handleAddComment}
             />
           ))
