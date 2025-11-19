@@ -1,25 +1,16 @@
-// eslint.config.js
-import next from "eslint-config-next";
-import globals from "globals";
+import { defineConfig, globalIgnores } from 'eslint/config'
+import nextVitals from 'eslint-config-next/core-web-vitals'
 
-export default [
-    {
-        ignores: ["**/dist/**", "**/.next/**"],
-    },
-    {
-        files: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
-        languageOptions: {
-            globals: {
-                ...globals.browser,
-                ...globals.node,
-            },
-        },
-        extends: [
-            "eslint:recommended",
-            ...next(),
-        ],
-        rules: {
-            // Tus reglas personalizadas acá
-        },
-    },
-];
+const eslintConfig = defineConfig([
+    ...nextVitals,
+    // Override default ignores of eslint-config-next.
+    globalIgnores([
+        // Default ignores of eslint-config-next:
+        '.next/**',
+        'out/**',
+        'build/**',
+        'next-env.d.ts',
+    ]),
+])
+
+export default eslintConfig
