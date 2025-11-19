@@ -39,7 +39,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: version: 7.25.1
+          version: 7.25.1
 
       - name: Cache pnpm store
         id: cache-pnpm
