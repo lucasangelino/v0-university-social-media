@@ -20,19 +20,21 @@ const AuthContext = createContext<AuthContextType>({
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const [hydrated, setHydrated] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedUser = localStorage.getItem('user')
-      if (storedUser && !user) {
+      if (storedUser) {
         setUser(JSON.parse(storedUser))
-      } else if (!storedUser && pathname !== '/login' && pathname !== '/register') {
+      } else if (pathname !== '/login' && pathname !== '/register') {
         router.push('/login')
       }
+      setHydrated(true)
     }
-  }, [pathname, router, user])
+  }, [pathname, router])
 
   const logout = () => {
     localStorage.removeItem('user')
@@ -40,7 +42,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     router.push('/login')
   }
 
-
+  if (!hydrated) {
+    return null
+  }
 
   return (
     <AuthContext.Provider value={{ user, logout }}>
