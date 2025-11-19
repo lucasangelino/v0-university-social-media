@@ -16,7 +16,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 7.25.1
           run_install: false
 
       - name: Install Node
@@ -40,7 +40,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 7.25.1
           run_install: false
 
       - name: Install Node
@@ -64,7 +64,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 7.25.1
           run_install: false
 
       - name: Install Node
@@ -89,7 +89,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 7.25.1
           run_install: false
 
       - name: Install Node
