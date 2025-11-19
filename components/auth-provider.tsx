@@ -15,7 +15,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  logout: () => {},
+  logout: () => { },
 })
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -28,12 +28,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Check for user session
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
-      setUser(JSON.parse(storedUser))
+      const parsedUser = JSON.parse(storedUser)
+      if (!user || JSON.stringify(user) !== JSON.stringify(parsedUser)) {
+        setUser(parsedUser)
+      }
     } else if (pathname !== '/login' && pathname !== '/register') {
       router.push('/login')
     }
     setLoading(false)
-  }, [pathname, router])
+  }, [pathname, router, user])
 
   const logout = () => {
     localStorage.removeItem('user')

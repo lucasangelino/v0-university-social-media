@@ -28,15 +28,11 @@ export interface Comment {
 
 export function Feed() {
   const { user } = useAuth()
-  const [posts, setPosts] = useState<Post[]>([])
-
-  // Load posts from localStorage on mount
-  useEffect(() => {
+  const [posts, setPosts] = useState<Post[]>(() => {
     const storedPosts = localStorage.getItem('posts')
     if (storedPosts) {
       const parsed = JSON.parse(storedPosts)
-      // Convert timestamp strings back to Date objects
-      const postsWithDates = parsed.map((post: Post) => ({
+      return parsed.map((post: Post) => ({
         ...post,
         timestamp: new Date(post.timestamp),
         comments: post.comments.map((comment: Comment) => ({
@@ -44,9 +40,9 @@ export function Feed() {
           timestamp: new Date(comment.timestamp)
         }))
       }))
-      setPosts(postsWithDates)
     }
-  }, [])
+    return []
+  })
 
   // Save posts to localStorage whenever they change
   useEffect(() => {
