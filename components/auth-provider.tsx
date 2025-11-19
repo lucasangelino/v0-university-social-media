@@ -23,7 +23,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const storedUser = localStorage.getItem('user')
     return storedUser ? JSON.parse(storedUser) : null
   })
-  const [loading, setLoading] = useState(true)
   const router = useRouter()
   const pathname = usePathname()
 
@@ -31,7 +30,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!user && pathname !== '/login' && pathname !== '/register') {
       router.push('/login')
     }
-    setLoading(false)
   }, [pathname, router, user])
 
   const logout = () => {
@@ -40,9 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     router.push('/login')
   }
 
-  if (loading) {
-    return null
-  }
+
 
   return (
     <AuthContext.Provider value={{ user, logout }}>
