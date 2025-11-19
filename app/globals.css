@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+
+  /* Primary brand color - University blue */
+  --color-primary: #2563eb;
+  --color-primary-foreground: #ffffff;
+
+  /* Background colors */
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0a;
+
+  /* Muted colors for secondary elements */
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #737373;
+
+  /* Border color */
+  --color-border: #e5e5e5;
+
+  /* Accent for hover states */
+  --color-accent: #f0f9ff;
+  --color-accent-foreground: #0a0a0a;
+
+  /* Card styling */
+  --color-card: #ffffff;
+  --color-card-foreground: #0a0a0a;
+
+  /* Destructive for logout/delete */
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+
+  /* Border radius */
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: theme('colors.border');
+}
+
+body {
+  color: theme('colors.foreground');
+  background: theme('colors.background');
+}
