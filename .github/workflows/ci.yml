@@ -36,8 +36,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
           version: 7.25.1
 
@@ -64,10 +64,20 @@ jobs:
     needs: setup
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 7.25.1
+
       - uses: actions/download-artifact@v4
         with:
           name: node_modules
           path: node_modules
+
       - name: Run lint
         run: pnpm lint
 
@@ -77,10 +87,20 @@ jobs:
     needs: setup
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 7.25.1
+
       - uses: actions/download-artifact@v4
         with:
           name: node_modules
           path: node_modules
+
       - name: Run typecheck
         run: pnpm typecheck
 
@@ -90,10 +110,20 @@ jobs:
     needs: setup
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 7.25.1
+
       - uses: actions/download-artifact@v4
         with:
           name: node_modules
           path: node_modules
+
       - name: Run tests
         run: pnpm test -- --coverage
 
@@ -103,10 +133,20 @@ jobs:
     needs: [lint, typecheck, test]
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 7.25.1
+
       - uses: actions/download-artifact@v4
         with:
           name: node_modules
           path: node_modules
+
       - name: Build
         run: pnpm build
 
