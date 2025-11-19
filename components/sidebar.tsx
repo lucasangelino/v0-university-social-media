@@ -11,7 +11,7 @@ export function Sidebar() {
   return (
     <div className="w-full p-4 flex flex-col gap-2">
       <div className="mb-4">
-        <h1 className="text-2xl font-bold text-primary">UniSocial</h1>
+        <h1 className="text-2xl font-bold text-primary">Security Media</h1>
       </div>
 
       <nav className="flex flex-col gap-2">
@@ -21,7 +21,7 @@ export function Sidebar() {
             Home
           </Link>
         </Button>
-        
+
         <Button variant="ghost" className="justify-start gap-3 text-base" asChild>
           <Link href="/notifications">
             <Bell className="h-5 w-5" />
@@ -56,8 +56,8 @@ export function Sidebar() {
           <p className="font-semibold text-sm">{user?.name}</p>
           <p className="text-xs text-muted-foreground">{user?.email}</p>
         </div>
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           className="w-full justify-start gap-3 text-base text-destructive hover:text-destructive hover:bg-destructive/10"
           onClick={logout}
         >
